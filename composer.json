@@ -10,7 +10,9 @@
         }
     ],
     "require": {
-        "guzzlehttp/guzzle": "*"
+        "php": "^8.1",
+        "guzzlehttp/guzzle": "*",
+        "codeception/codeception": "*"
     },
     "autoload": {
         "psr-4": {
