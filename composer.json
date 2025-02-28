@@ -1,0 +1,19 @@
+{
+    "name": "trevorbicewebdesign/codeception-mailpit",
+    "description": "Provides test helpers for Codeception when testing email functionality with Mailpit",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Trevor Bice",
+            "email": "trevorbicewebdesign@gmail.com",
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Codeception\\Module\\": "src"
+        }
+    }
+}
