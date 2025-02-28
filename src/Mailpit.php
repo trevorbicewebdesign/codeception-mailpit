@@ -30,50 +30,7 @@ class Mailpit extends Module
         ]);
     }
 
-    /**
-     * Get the plain-text content of the most recent email.
-     *
-     * @return string
-     * @throws \Exception if no messages are found or on API error.
-     */
-    <?php
-namespace Codeception\Module;
-
-use Codeception\Module;
-use GuzzleHttp\Client;
-
-class Mailpit extends Module
-{
-    protected $mailpit;
-    /**
-     * Module configuration.
-     *
-     * @var array
-     */
-    protected array $config = [
-        'base_uri' => 'http://localhost:10006/',
-    ];
-
-    /**
-     * @var Client
-     */
-    protected $client;
-
-    protected array $requiredFields = array('base_uri');
-
-    public function _initialize()
-    {
-        if (empty($this->config['base_uri'])) {
-            throw new \Exception('The base_uri configuration is required.');
-        }
-
-        $this->client = new Client([
-            'base_uri' => $this->config['base_uri'],
-            'timeout'  => 10,
-        ]);
-    }
-
-    /**
+   /**
      * Get the plain-text content of the most recent email.
      *
      * @return string
