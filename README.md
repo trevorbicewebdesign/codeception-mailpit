@@ -33,31 +33,6 @@ modules:
 ```
 - **base_uri:**  The base URL for your Mailpit installation.
 
-## Usage
-
-Once installed and configured, you can use the module in your tests. For example:
-
-```php
-public function testActivationEmailContent(AcceptanceTester $I)
-{
-    // Get the Mailpit module instance.
-    $mailpit = $I->getModule('Mailpit');
-    
-    // Fetch the full content of the most recent email.
-    $fullContent = $mailpit->getLastEmailFullContent();
-    
-    // Extract the activation key using a regular expression.
-    preg_match('/[?&]key=([^&]+)/', $fullContent, $matches);
-    $activationKey = $matches[1] ?? null;
-    
-    // Assert that an activation key was found.
-    $I->assertNotEmpty($activationKey, 'Activation key not found in email content.');
-    
-    // Optionally, output the key or perform additional assertions.
-    $I->comment("Extracted activation key: {$activationKey}");
-}
-```
-
 ## API Methods
 
 ```getLastEmailId()```
