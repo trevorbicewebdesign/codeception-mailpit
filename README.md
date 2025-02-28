@@ -9,6 +9,7 @@ The Mailpit module integrates with Codeception using Guzzle to interact with Mai
 - **Search Emails:** Retrieve the most recent email(s) based on search criteria.
 - **Fetch Full Email Content:** After searching, fetch the complete content of an email by its ID.
 - **Extract Information:** Easily extract details such as activation keys for further assertions in your tests.
+- **Email Assertions for Codeception:** 
 
 ## Installation
 
