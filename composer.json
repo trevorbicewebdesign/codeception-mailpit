@@ -1,7 +1,7 @@
 {
     "name": "trevorbicewebdesign/codeception-mailpit",
     "description": "Provides test helpers for Codeception when testing email functionality with Mailpit",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "license": "MIT",
     "authors": [
         {
