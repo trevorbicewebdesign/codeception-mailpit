@@ -164,6 +164,29 @@ class Mailpit extends Module
     }
 
     /**
+     * Asserts that the plain text content of an email matches the expected value.
+     *
+     * This method retrieves an email by its ID, extracts the plain text content,
+     * and asserts that it matches the expected value.
+     *
+     * @param string $messageId The ID of the email to retrieve.
+     * @param string $expected The expected plain text content of the email.
+     *
+     * @return void
+     */
+    public function assertEmailTextEquals($messageId, $expectedText)
+    {
+        // Retrieve the email by its ID.
+        $email = $this->getEmailById($messageId);
+
+        // Extract the plain text content from the email.
+        $actual = $email['Text'] ?? '';
+
+        // Assert that the actual email text matches the expected value.
+        $this->assertEquals($expectedText, $actual);
+    }
+
+    /**
      * Asserts that the subject of the email with the given message ID matches the expected subject.
      *
      * @param string $messageId The ID of the email message to check.
@@ -180,6 +203,71 @@ class Mailpit extends Module
         $actualSubject = $email['Subject'] ?? '';
 
         // Assert that the actual email subject matches the expected value.
-        $this->assertEquals($expectedSubject, $actualSubject, "Failed asserting that the email #{$messageId} subject '{$actualSubject}' equals '{$expectedSubject}'.");
+        $this->assertEquals($expectedSubject, $actualSubject);
     }
+
+    /**
+     * Asserts that the subject of an email contains the expected value.
+     *
+     * @param string $messageId The ID of the email to check.
+     * @param string $expectedSubject The expected subject substring.
+     *
+     * @throws \PHPUnit\Framework\AssertionFailedError If the actual subject does not contain the expected value.
+     */
+    public function assertEmailSubjectContains($messageId, $expectedSubject)
+    {
+        // Retrieve the email by its ID.
+        $email = $this->getEmailById($messageId);
+
+        // Extract the subject from the email.
+        $actualSubject = $email['Subject'] ?? '';
+
+        // Assert that the actual email subject matches the expected value.
+        $this->assertStringContainsString($expectedSubject, $actualSubject, "Failed asserting that the email #{$messageId} subject '{$actualSubject}' contains '{$expectedSubject}'.");
+    }
+
+    /**
+     * Asserts that an email identified by its message ID contains the expected headers.
+     *
+     * @param string $messageId The ID of the email message to check.
+     * @param array $expectedHeaders An associative array of expected headers to check against the email's actual headers.
+     *
+     * @throws \Exception If the email cannot be retrieved or if the headers do not match.
+     */
+    public function assertEmailHasHeaders($messageId, $expectedHeaders)
+    {
+        // Retrieve the email by its ID.
+        $email = $this->getEmailById($messageId);
+
+        // Extract the headers from the email.
+        $actualHeaders = $email['Headers'] ?? [];
+
+        // Assert that the actual email headers match the expected value.
+        $this->assertArrayContainsArray($expectedHeaders, $actualHeaders);
+    }
+
+    public function assertEmailHtmlContains($messageId, $expectedHTML)
+    {
+        // Retrieve the email by its ID.
+        $email = $this->getEmailById($messageId);
+
+        // Extract the HTML content from the email.
+        $actualHTML = $email['Html'] ?? '';
+
+        // Assert that the actual email HTML contains the expected value.
+        $this->assertStringContainsString($expectedHTML, $actualHTML, "Failed asserting that the email #{$messageId} HTML '{$actualHTML}' contains '{$expectedHTML}'.");
+    }
+
+    public function assertEmailHtmlEquals($messageId, $expectedHTML)
+    {
+        // Retrieve the email by its ID.
+        $email = $this->getEmailById($messageId);
+
+        // Extract the HTML content from the email.
+        $actualHTML = $email['Html'] ?? '';
+
+        // Assert that the actual email HTML matches the expected value.
+        $this->assertEquals($expectedHTML, $actualHTML);
+    }
+   
 }
