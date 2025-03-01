@@ -246,6 +246,14 @@ class Mailpit extends Module
         $this->assertContains($expectedHeaders, $actualHeaders);
     }
 
+    /**
+     * Asserts that the HTML content of an email contains the expected value.
+     *
+     * @param string $messageId The ID of the email to be checked.
+     * @param string $expectedHTML The expected HTML content to be found within the email.
+     *
+     * @throws \Exception If the email cannot be retrieved or the assertion fails.
+     */
     public function assertEmailHtmlContains($messageId, $expectedHTML)
     {
         // Retrieve the email by its ID.
@@ -258,6 +266,14 @@ class Mailpit extends Module
         $this->assertStringContainsString($expectedHTML, $actualHTML, "Failed asserting that the email #{$messageId} HTML '{$actualHTML}' contains '{$expectedHTML}'.");
     }
 
+    /**
+     * Asserts that the HTML content of an email matches the expected HTML.
+     *
+     * @param string $messageId The ID of the email to retrieve.
+     * @param string $expectedHTML The expected HTML content to compare against.
+     *
+     * @return void
+     */
     public function assertEmailHtmlEquals($messageId, $expectedHTML)
     {
         // Retrieve the email by its ID.
