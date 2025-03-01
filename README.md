@@ -33,15 +33,22 @@ modules:
 ```
 - **base_uri:**  The base URL for your Mailpit installation.
 
-## API Methods
+## Usage
 
-```getLastEmailId()```
-```getEmailById($id)```
-```getEmailBySubject($subject)```
+Once installed and configured, you can use the module in your tests. For example:
+
+## Mailpit Module API Methods
+
+- ```getLastEmailId()``` - Get the mailpit message id of the most recent email.
+- ```getEmailById($id)``` - Retrieves an email by its ID.
+- ```getEmailBySubject($subject)``` - Retrieves the ID of the most recent email that matches the given subject.
 
 ## Assertions
-- **assertEmailTextContains($messageId, $expected)**
+- **assertEmailTextContains($messageId, $expectedText)**
+- **assertEmailTextEquals($messageId, $extectedText)**
 - **assertEmailSubjectEquals($messageId, $expectedSubject)**
+- **assertEmailSubjectContains($messageId, $expectedSubject)**
+- **assertEmailHasHeaders($messageId,$expectedHeaders)**
 
 
 
