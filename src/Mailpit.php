@@ -243,7 +243,7 @@ class Mailpit extends Module
         $actualHeaders = $email['Headers'] ?? [];
 
         // Assert that the actual email headers match the expected value.
-        $this->assertArrayContainsArray($expectedHeaders, $actualHeaders);
+        $this->assertContains($expectedHeaders, $actualHeaders);
     }
 
     public function assertEmailHtmlContains($messageId, $expectedHTML)
