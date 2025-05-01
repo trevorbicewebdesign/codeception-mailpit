@@ -113,9 +113,9 @@ class Mailpit extends Module
     public function getLastEmailId()
     {
         // Mailpit API endpoint for searching messages.
-        $searchEndpoint = '/api/v1/search';
+        $searchEndpoint = '/api/v1/message';
         $searchQuery = [
-            'query' => "''",  // Literal two single quotes to satisfy the API.
+            'query' => 'all',  // Literal two single quotes to satisfy the API.
             'limit' => 1,
             'sort'  => 'desc'
         ];
