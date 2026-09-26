@@ -49,6 +49,18 @@ Once installed and configured, you can use the module in your tests. For example
 - **assertEmailSubjectEquals($messageId, $expectedSubject)**
 - **assertEmailSubjectContains($messageId, $expectedSubject)**
 - **assertEmailHasHeaders($messageId,$expectedHeaders)**
+- **assertEmailHtmlContains($messageId, $expectedHTML)**
+- **assertEmailHtmlEquals($messageId, $expectedHTML)**
+- **assertEmailHasAttachment($messageId, $fileName, $contentType = null, $minSize = 1)** - the email carries an attachment with that file name (optionally checking its MIME type and a minimum size).
+- **assertEmailHasNoAttachments($messageId)**
+
+## Attachments
+
+- ```getEmailAttachments($messageId)``` - the email's attachments as Mailpit reports them (`PartID`, `FileName`, `ContentType`, `ContentID`, `Size`).
+
+## Changelog
+
+- **0.0.7** - `assertEmailHtmlContains` / `assertEmailHtmlEquals` now read the HTML body (they compared against an empty string before, because Mailpit's API key is `HTML`, not `Html`). New `getEmailAttachments`, `assertEmailHasAttachment` and `assertEmailHasNoAttachments`.
 
 
 

@@ -260,7 +260,7 @@ class Mailpit extends Module
         $email = $this->getEmailById($messageId);
 
         // Extract the HTML content from the email.
-        $actualHTML = $email['Html'] ?? '';
+        $actualHTML = $email['HTML'] ?? '';
 
         // Assert that the actual email HTML contains the expected value.
         $this->assertStringContainsString($expectedHTML, $actualHTML, "Failed asserting that the email #{$messageId} HTML '{$actualHTML}' contains '{$expectedHTML}'.");
@@ -280,10 +280,71 @@ class Mailpit extends Module
         $email = $this->getEmailById($messageId);
 
         // Extract the HTML content from the email.
-        $actualHTML = $email['Html'] ?? '';
+        $actualHTML = $email['HTML'] ?? '';
 
         // Assert that the actual email HTML matches the expected value.
         $this->assertEquals($expectedHTML, $actualHTML);
     }
-   
+
+    /**
+     * Returns the attachments of an email as Mailpit reports them: each entry has PartID,
+     * FileName, ContentType, ContentID and Size.
+     *
+     * @param string $messageId The ID of the email.
+     * @return array<int, array<string, mixed>>
+     * @throws \Exception If the email cannot be retrieved.
+     */
+    public function getEmailAttachments($messageId)
+    {
+        $email = $this->getEmailById($messageId);
+
+        return $email['Attachments'] ?? [];
+    }
+
+    /**
+     * Asserts that an email carries an attachment with the given file name (and, optionally,
+     * content type and a minimum size in bytes, to catch empty files).
+     *
+     * @param string      $messageId   The ID of the email.
+     * @param string      $fileName    Expected attachment file name, e.g. "invoice.pdf".
+     * @param string|null $contentType Expected MIME type, e.g. "application/pdf" (optional).
+     * @param int         $minSize     Minimum size in bytes (default 1: any non-empty file).
+     *
+     * @throws \Exception If the email cannot be retrieved or the assertion fails.
+     */
+    public function assertEmailHasAttachment($messageId, $fileName, $contentType = null, $minSize = 1)
+    {
+        $attachments = $this->getEmailAttachments($messageId);
+        $names = array_map(fn($a) => $a['FileName'] ?? '', $attachments);
+
+        $match = null;
+        foreach ($attachments as $attachment) {
+            if (($attachment['FileName'] ?? '') === $fileName) {
+                $match = $attachment;
+                break;
+            }
+        }
+
+        $this->assertNotNull($match, "Failed asserting that email #{$messageId} has an attachment named '{$fileName}'. Attachments: " . ($names ? implode(', ', $names) : '(none)') . '.');
+
+        if ($contentType !== null) {
+            $this->assertSame($contentType, $match['ContentType'] ?? '', "Attachment '{$fileName}' on email #{$messageId} has content type '" . ($match['ContentType'] ?? '') . "', expected '{$contentType}'.");
+        }
+
+        $this->assertGreaterThanOrEqual($minSize, (int) ($match['Size'] ?? 0), "Attachment '{$fileName}' on email #{$messageId} is " . (int) ($match['Size'] ?? 0) . " bytes, expected at least {$minSize}.");
+    }
+
+    /**
+     * Asserts that an email carries no attachments.
+     *
+     * @param string $messageId The ID of the email.
+     * @throws \Exception If the email cannot be retrieved or the assertion fails.
+     */
+    public function assertEmailHasNoAttachments($messageId)
+    {
+        $attachments = $this->getEmailAttachments($messageId);
+        $names = array_map(fn($a) => $a['FileName'] ?? '', $attachments);
+
+        $this->assertCount(0, $attachments, "Failed asserting that email #{$messageId} has no attachments. Found: " . implode(', ', $names) . '.');
+    }
 }
